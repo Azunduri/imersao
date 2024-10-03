@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscrição Imersão de Negócio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #da7f8f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    header {
+      background-image: url('https://media.licdn.com/dms/image/v2/D4D16AQEhcx4pu9zrQQ/profile-displaybackgroundimage-shrink_200_800/profile-displaybackgroundimage-shrink_200_800/0/1672928393871?e=2147483647&v=beta&t=Blohg2vBbioYq2ZhoW7imNC8FNS2lIzUlXX7CLw3w2U'); 
+      background-size: cover;
+      background-position: center;
+      height: 200px; /* Ajuste a altura da imagem conforme necessário */
+      width: 100%;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    form {
+      background-color: #d16b8c;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      margin-bottom: 20px; /* Espaçamento entre o formulário e os resultados */
+    }
+    label {
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    input[type="text"] {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #abbe7f;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #606c38;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #333;
+    }
+    .result-container {
+      background-color: #fff;
+      padding: 15px; /* Reduzindo o padding */
+      margin-top: 10px; /* Reduzindo a margem superior */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 300px; /* A mesma largura do formulário */
+      text-align: left;
+    }
+    .result-container div {
+      margin-bottom: 8px; /* Espaçamento entre os resultados */
+      color: #333;
+    }
+    #result {
+      font-weight: bold; /* Destacar o resultado */
+    }
+  </style>
+  <script>
+    async function fetchData() {
+      const code = document.getElementById('code').value;
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbx6NysuHfJZZZnpR5O3mSoD9bX5LRpsuHev5ePTeBKHdD60SAykSC7DN2CfZGWvcD8gsA/exec?code=${code}`);
+      const result = await response.json();
+      
+      if (result.error) {
+        document.getElementById('name').innerText = '';
+        document.getElementById('result').innerText = result.error;
+      } else {
+        document.getElementById('name').innerText = `Nome: ${result.name}`;
+        document.getElementById('result').innerText = `Resultado: ${result.result}`;
+      }
+    }
+  </script>
+</head>
+<body>
+  <header></header>
+  <h1>Consulta de Inscrição</h1>
+  <form onsubmit="event.preventDefault(); fetchData();">
+    <label for="code">CPF:</label>
+    <input type="text" id="code" name="code" required>
+    <button type="submit">Consultar</button>
+  </form>
+  
+  <div class="result-container">
+    <div id="name"></div>
+    <div id="result"></div>
+  </div>
+</body>
+</html>
